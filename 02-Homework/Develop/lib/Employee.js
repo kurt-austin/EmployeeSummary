@@ -4,8 +4,15 @@ class Employee {
     this.name = name;
     this.id = id;
     this.email = email;
-    this.email = role;
+    
   }
+
+  getName = () => name;
+
+  getId = () => id;
+
+  getEmail = () => email;
+    
   getRole = () => Employee;
 }
 
