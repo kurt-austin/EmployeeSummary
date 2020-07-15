@@ -12,55 +12,93 @@ const render = require("./lib/htmlRenderer");
 
 
 // Write code to use inquirer to gather information about the development team members,
-const questionsAll = [
-    {   
-        type: "input",
-        message: "What is the your name?",
-        name: "Name"
-    },
-     {
-        type: "input",
-        message: "Please enter your ID.",
-        name: "Id"
-    },
-    {
-      type: "input",
-      message: "What is your email address?",
-      name: "Email"
-    },
-    {
-        type: "list",
-        message: "What is your Role?",
-        name: "GetRole",
-        choices: ["Employee","Manager","Engineer","Intern"]
-    }
+const questionsMgr = [
+  {
+    type: "input",
+    message: "What is the your Manager's name?",
+    name: "Name"
+  },
+  {
+    type: "input",
+    message: "Please enter your Manager's ID?",
+    name: "Id"
+  },
+  {
+    type: "input",
+    message: "What is your Manager's email address?",
+    name: "Email"
+  },
+  {
+
+    type: "input",
+    message: "What is your Office Number?",
+    name: "OfficeNumber",
+
+  },
+
 ];
 
-const questionsMgr = [{
-     type: "input",
-     message: "What is your Office Number?",
-     name: "OfficeNumber",
-     
-     }
-];
+const quesTeamChoice = [
+  {
+    type: "list",
+    message: "Which type of team member would you like to add?",
+    name: "Role",
+    choices: ["Engineer", "Intern", "I don't want to add any more team members"]
+
+  }
+
+]
+
 
 const questionsEgr = [
-    {
-        type: "input",
-        message: "What is your GitHub username?",
-        name: "Github"
-      }
+  {
+    type: "input",
+    message: "What is the your Engineer's name?",
+    name: "Name"
+  },
+  {
+    type: "input",
+    message: "Please enter your Engineer's ID?",
+    name: "Id"
+  },
+  {
+    type: "input",
+    message: "What is your Engineer's email address?",
+    name: "Email"
+  },
+  {
+    type: "input",
+    message: "What is your GitHub username?",
+    name: "github"
+  },
+
+
 ];
 
 const questionsIntern = [
-      {
-        type: "input",
-        message: "What school are you attending?",
-        name: "School"
-      }
-];      
+  {
+    type: "input",
+    message: "What is the your Intern's name?",
+    name: "Name"
+  },
+  {
+    type: "input",
+    message: "Please enter your Intern's ID?",
+    name: "Id"
+  },
+  {
+    type: "input",
+    message: "What is your Intern's email address?",
+    name: "Email"
+  },
+  {
+    type: "input",
+    message: "What school does the intern attend?",
+    name: "School"
+  }
+];
 
- 
+
 
 
 
@@ -89,30 +127,57 @@ const questionsIntern = [
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
-async function init() {
-    try {
-        const answersAll = await inquirer.prompt(questionsAll);
-        console.log(answersAll.GetRole);
-        switch(answersAll.GetRole){
-            case "Manager":
-              const answersMgr = await inquirer.prompt(questionsMgr);
-              console.log(answersMgr);
-                break;
-            case "Engineer":
-                const answersEgr = await inquirer.prompt(questionsEgr);
-                console.log(answersEgr);
-                break;
-            case "Intern":
-                const answersIntern = await inquirer.prompt(questionsIntern);
-                console.log(answersIntern);
-                break;
-            default:
+async function Mgr() {
+  try {
+    const answersMgr = await inquirer.prompt(questionsMgr);
+    console.log(answersMgr);
+    // answersMgr["Role"] ="Employee";
+    console.log(answersMgr);
+    console.log(typeof(answersMgr));
+    render(answersMgr);
+    teamChoice();
+   
 
-          };
-
-    } catch(err) {
-        console.log(err);
-      }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-init ();
+
+
+Mgr();
+
+
+async function teamChoice() {
+  const answersTeamChoice = await inquirer.prompt(quesTeamChoice)
+  console.log(answersTeamChoice.role)
+  switch (answersTeamChoice.role) {
+    case "Engineer":
+      Egr();
+      break;
+    case "Intern":
+      Int();
+      break;
+
+    
+
+
+  }
+
+}
+
+
+async function Egr() {
+  const answersEgr = await inquirer.prompt(questionsEgr);
+  teamChoice();
+
+};
+
+
+async function Int() {
+  const answersIntern = await inquirer.prompt(questionsIntern);
+  teamChoice();
+
+};
+
+

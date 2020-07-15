@@ -1,11 +1,19 @@
 const path = require("path");
 const fs = require("fs");
+const employee = require('./Employee')
+const Manager = require('./Manager')
 
 const templatesDir = path.resolve(__dirname, "../templates");
 
 const render = employees => {
   const html = [];
-
+  // employees = Object.values(employees);
+  // console.log(typeof(employees));
+  // const propertyValues = Object.values();
+  console.log("1");
+  employees = Object.values(employees);
+  console.log(employees);
+  // console.log(employee);
   html.push(employees
     .filter(employee => employee.getRole() === "Manager")
     .map(manager => renderManager(manager))
@@ -18,6 +26,8 @@ const render = employees => {
     .filter(employee => employee.getRole() === "Intern")
     .map(intern => renderIntern(intern))
   );
+
+  console.log("2");
 
   return renderMain(html.join(""));
 

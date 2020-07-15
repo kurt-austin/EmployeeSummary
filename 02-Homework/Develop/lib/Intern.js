@@ -7,14 +7,26 @@ class Intern extends Employee {
     this.school = school
   }
 
-  getName = () => name;
+  getName() {
+    return name;
+  };
 
-  getId = () => id;
+  getId () {
+    return id;
+  };
 
-  getEmail = () => email; 
+  getEmail (){
+    return email
+  }; 
 
-  getSchool = () => school;
-  getRole = () => Intern;
+  
+  getSchool(){
+    return this.school;
+  };
+
+  getRole (){
+    return "Intern"
+  };
 
 }
 module.exports = Intern;
