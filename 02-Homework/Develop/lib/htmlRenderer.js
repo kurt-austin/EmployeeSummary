@@ -10,9 +10,11 @@ const render = employees => {
   // employees = Object.values(employees);
   // console.log(typeof(employees));
   // const propertyValues = Object.values();
-  console.log("1");
-  employees = Object.values(employee);
+  // console.log("1");
+  // console.log(employee);
+  // employees = Object.values(employee);
   console.log(employees);
+  // console.log(employees.name);
   // console.log(employee);
   html.push(employees
     .filter(employee => employee.getRole() === "Manager")
@@ -37,9 +39,11 @@ const renderManager = manager => {
   let template = fs.readFileSync(path.resolve(templatesDir, "manager.html"), "utf8");
   template = replacePlaceholders(template, "name", manager.getName());
   template = replacePlaceholders(template, "role", manager.getRole());
+
   template = replacePlaceholders(template, "email", manager.getEmail());
   template = replacePlaceholders(template, "id", manager.getId());
   template = replacePlaceholders(template, "officeNumber", manager.getOfficeNumber());
+  console.log(template);
   return template;
 };
 

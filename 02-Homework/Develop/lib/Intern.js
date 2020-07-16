@@ -8,15 +8,15 @@ class Intern extends Employee {
   }
 
   getName() {
-    return name;
+    return this.name;
   };
 
   getId () {
-    return id;
+    return this.id;
   };
 
   getEmail (){
-    return email
+    return this.email;
   }; 
 
   
