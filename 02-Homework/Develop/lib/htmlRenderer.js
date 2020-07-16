@@ -11,7 +11,7 @@ const render = employees => {
   // console.log(typeof(employees));
   // const propertyValues = Object.values();
   console.log("1");
-  employees = Object.values(employees);
+  employees = Object.values(employee);
   console.log(employees);
   // console.log(employee);
   html.push(employees

@@ -35,16 +35,16 @@ const questionsMgr = [
     name: "OfficeNumber",
 
   },
+  
 
 ];
 
-const quesTeamChoice = [
-  {
-    type: "list",
-    message: "Which type of team member would you like to add?",
-    name: "Role",
-    choices: ["Engineer", "Intern", "I don't want to add any more team members"]
-
+ const quesTeamChoice = [
+   {
+   type: "list",
+   message: "Which type of team member would you like to add?",
+   name: "Role",
+   choices: ["Engineer", "Intern", "I don't want to add any more team members"]
   }
 
 ]
@@ -130,13 +130,19 @@ const questionsIntern = [
 async function Mgr() {
   try {
     const answersMgr = await inquirer.prompt(questionsMgr);
-    console.log(answersMgr);
+    // console.log(answersMgr);
     // answersMgr["Role"] ="Employee";
-    console.log(answersMgr);
-    console.log(typeof(answersMgr));
-    render(answersMgr);
-    teamChoice();
-   
+    // console.log(answersMgr);
+    // console.log(typeof(answersMgr));
+
+
+    const employee = new Manager(answersMgr.Name, answersMgr.Id, answersMgr.Email, answersMgr.OfficeNumber);
+    // console.log(a);
+    // teamChoice();
+    render(employee);
+    
+    console.log("i am back")
+    // console.log(answersTeamChoice.Role);
 
   } catch (err) {
     console.log(err);
@@ -146,19 +152,26 @@ async function Mgr() {
 
 
 Mgr();
-
+// render(employee);
 
 async function teamChoice() {
   const answersTeamChoice = await inquirer.prompt(quesTeamChoice)
-  console.log(answersTeamChoice.role)
-  switch (answersTeamChoice.role) {
+  // console.log(answersTeamChoice.role)
+  // console.log(questTeamChoic.choices)
+  // console.log(answersTeamChoice);
+  // console.log(answersTeamChoice.Role);
+  console.log("teamchoice");
+  switch (answersTeamChoice.Role) {
     case "Engineer":
       Egr();
       break;
     case "Intern":
       Int();
       break;
-
+    case "I don't want to add any more team members":
+      console.log("I am here kurt")
+      // console.log(a);
+      // render(a);
     
 
 
