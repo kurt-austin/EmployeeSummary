@@ -8,6 +8,9 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
+console.log(OUTPUT_DIR);
+console.log(outputPath);
+
 const render = require("./lib/htmlRenderer");
 const employeesArr = [];
 
@@ -152,8 +155,8 @@ async function Mgr() {
         Int();
         break;
       case "I don't want to add any more team members":
-        console.log("I am here kurt")
         render(employeesArr);
+        createDir();
         break;
 
     }
@@ -184,6 +187,7 @@ async function Egr() {
         break;
       case "I don't want to add any more team members":
         render(employeesArr);
+        createDir();
         break;
     }
   } catch (err) {
@@ -205,8 +209,8 @@ async function Int() {
         Int();
         break;
       case "I don't want to add any more team members":
-        console.log("I am here kurt")
         render(employeesArr);
+        createDir();
         break;
 
     }
@@ -216,3 +220,12 @@ async function Int() {
 };
 
 
+function createDir (){
+  if (!fs.existsSync(OUTPUT_DIR)){
+    fs.mkdirSync(OUTPUT_DIR);
+  }
+  fs.writeFile(outputPath , render, (err) => {
+    if (err) throw err;
+    console.log('The file has been saved!');
+  });
+}
