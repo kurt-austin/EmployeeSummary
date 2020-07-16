@@ -12,9 +12,13 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 const employeesArr = [];
 
-
-// Write code to use inquirer to gather information about the development team members,
+// Questions for Manager 
 const questionsMgr = [
+  {
+    type: "input",
+    message: "Please build your team.",
+    name: "team"
+  },
   {
     type: "input",
     message: "What is the your Manager's name?",
@@ -31,11 +35,9 @@ const questionsMgr = [
     name: "email"
   },
   {
-
     type: "input",
     message: "What is your Office Number?",
     name: "officeNumber",
-
   },
   {
     type: "list",
@@ -44,9 +46,9 @@ const questionsMgr = [
     choices: ["Engineer", "Intern", "I don't want to add any more team members"]
   }
 
-
 ];
 
+// Questions for Engineer
 
 const questionsEgr = [
   {
@@ -76,8 +78,9 @@ const questionsEgr = [
     choices: ["Engineer", "Intern", "I don't want to add any more team members"]
   }
 
-
 ];
+
+// Questions for Intern
 
 const questionsIntern = [
   {
@@ -108,94 +111,77 @@ const questionsIntern = [
   }
 ];
 
-
+// Manager Processing
 
 async function Mgr() {
   try {
-    const answersMgr = await inquirer.prompt(questionsMgr);
-
-
-    let employee = new Manager(answersMgr.name, answersMgr.id, answersMgr.email, answersMgr.officeNumber);
-    employeesArr.push(employee);
-    switch (answersMgr.role) {
-      case "Engineer":
-        Egr();
-        break;
-      case "Intern":
-        Int();
-        break;
-      case "I don't want to add any more team members":
-        render(employeesArr);
-        createFile();
-        break;
-
-    }
-
-
+    let answers = await inquirer.prompt(questionsMgr);
+    let employee = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+    pushAndAdd(employee, answers);
 
   } catch (err) {
     console.log(err);
   }
 }
 
-
-
-Mgr();
-
+// Engineer Processing
 
 async function Egr() {
   try {
-    const answersEgr = await inquirer.prompt(questionsEgr);
-    let employee = new Engineer(answersEgr.name, answersEgr.id, answersEgr.email, answersEgr.github);
-    employeesArr.push(employee);
-    switch (answersEgr.role) {
-      case "Engineer":
-        Egr();
-        break;
-      case "Intern":
-        Int();
-        break;
-      case "I don't want to add any more team members":
-        render(employeesArr);
-        createFile();
-        break;
-    }
+    let answers = await inquirer.prompt(questionsEgr);
+    let employee = new Engineer(answers.name, answers.id, answers.email, answers.github);
+    pushAndAdd(employee, answers)
+
   } catch (err) {
     console.log(err);
   }
 };
 
+
+// Intern Processing 
 
 async function Int() {
   try {
-    const answersIntern = await inquirer.prompt(questionsIntern);
-    let employee = new Intern(answersIntern.name, answersIntern.id, answersIntern.email, answersIntern.school);
-    employeesArr.push(employee);
-    switch (answersIntern.role) {
-      case "Engineer":
-        Egr();
-        break;
-      case "Intern":
-        Int();
-        break;
-      case "I don't want to add any more team members":
-        render(employeesArr);
-        createFile();
-        break;
+    let answers = await inquirer.prompt(questionsIntern);
+    let employee = new Intern(answers.name, answers.id, answers.email, answers.school);
+    pushAndAdd(employee, answers)
 
-    }
   } catch (err) {
     console.log(err);
   }
 };
 
 
-function createFile (){
-  if (!fs.existsSync(OUTPUT_DIR)){
+// Renders Team.html 
+function createFile() {
+  if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR);
   }
-  fs.writeFile(outputPath , render(employeesArr), (err) => {
+  fs.writeFile(outputPath, render(employeesArr), (err) => {
     if (err) throw err;
     console.log('The file has been saved!');
   });
 }
+
+// Pushes instantiated employee class to Array.  When no more team members are added, send the array to the Render function called in htmlRenderer.js.
+
+function pushAndAdd(employee, answers) {
+  employeesArr.push(employee);
+  switch (answers.role) {
+    case "Engineer":
+      Egr();
+      break;
+    case "Intern":
+      Int();
+      break;
+    case "I don't want to add any more team members":
+      render(employeesArr);
+      createFile();
+      break;
+  }
+
+}
+
+// Call the initial Manager questions.
+
+Mgr();
